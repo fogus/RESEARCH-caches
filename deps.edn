@@ -1,0 +1,35 @@
+{
+ :paths ["target/classes" "src" "test"]
+ :deps {org.clojure/clojure {:mvn/version "1.12.0-alpha1"}
+        com.github.ben-manes.caffeine/caffeine {:mvn/version "2.9.3"}
+        org.cache2k/cache2k-api {:mvn/version "2.6.1.Final"}
+        org.cache2k/cache2k-core {:mvn/version "2.6.1.Final"}
+        com.google.guava/guava {:mvn/version "31.1-jre"}
+        org.ehcache/ehcache {:mvn/version "3.10.0"}
+        ;;  javax.cache/cache-api {:mvn/version "1.1.0"}
+ }
+
+ :aliases
+ {
+  :test {:deps {org.clojure/clojure {:mvn/version "1.12.0-alpha1"}
+                com.github.ben-manes.caffeine/caffeine {:mvn/version "2.9.3" :exclusions [org.checkerframework/checker-qual, com.google.errorprone/error_prone_annotations]}
+                org.cache2k/cache2k-api {:mvn/version "2.6.1.Final" :exclusions [com.google.code.findbugs/jsr305 org.jetbrains.kotlin/kotlin-annotations-jvm]}
+                org.cache2k/cache2k-core {:mvn/version "2.6.1.Final" :exclusions [org.slf4j/slf4j-simple org.cache2k/cache2k-testing junit/junit net.jcip/jcip-annotations]}
+                com.google.guava/guava {:mvn/version "31.1-jre" :exclusions [com.google.guava/failureaccess com.google.guava/listenablefuture com.google.code.findbugs/jsr305 org.checkerframework/checker-qual com.google.errorprone/error_prone_annotations com.google.j2objc/j2objc-annotations]}
+                org.ehcache/ehcache {:mvn/version "3.10.0" :exclusions [javax.cache/cache-api org.glassfish.jaxb/jaxb-runtime]}
+                ;;  javax.cache/cache-api {:mvn/version "1.1.0"}
+         }
+         :extra-paths ["test"]
+         :extra-deps {io.github.cognitect-labs/test-runner
+                      {:git/url "https://github.com/cognitect-labs/test-runner.git"
+                       :sha "9e35c979860c75555adaff7600070c60004a0f44"}}
+         :main-opts ["-m" "cognitect.test-runner"]
+         :exec-fn cognitect.test-runner.api/test}
+  
+  :build {:deps {io.github.clojure/tools.build {:git/tag "v0.8.1" :git/sha "7d40500"}}
+          :ns-default build}
+ }
+
+ :mvn/repos {"central" {:url "https://repo1.maven.org/maven2/"}
+             "clojars" {:url "https://repo.clojars.org/"}}
+}
